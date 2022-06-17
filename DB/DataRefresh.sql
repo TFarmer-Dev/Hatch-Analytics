@@ -83,6 +83,6 @@ GO
 EXECUTE DataRefresh;
 GO
 
-USE Plex_Accelerated;
-SELECT * FROM [Plex_Accelerated].[dbo].[Stored_Procedure_Information_f] AS S ORDER BY Last_Altered DESC;
-GO
+--USE Plex_Accelerated;
+--SELECT * FROM [Plex_Accelerated].[dbo].[Stored_Procedure_Information_f] AS S ORDER BY Last_Altered DESC;
+--GO
