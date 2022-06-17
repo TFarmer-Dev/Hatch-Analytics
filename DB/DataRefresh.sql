@@ -29,7 +29,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE
-	  @RangeStart VARCHAR(1048)
+	  @RangeStart DATETIME2
 	  , @LinkedServer VARCHAR(MAX)
 	  , @OpenQuery VARCHAR(MAX)
 	  , @SQL VARCHAR(MAX)	  
@@ -67,7 +67,8 @@ BEGIN
                    LEFT JOIN Plexus_Control_V_Plexus_User_E AS Pum
                    ON Pum.Plexus_Customer_No = S.Pcn
                      AND Pum.Plexus_User_No = S.Last_Altered_Pun
-                 WHERE Last_Altered > GETDATE()'')
+                 WHERE Last_Altered > GETDATE()
+                 ORDER BY Last_Altered DESC'')
                 '
 				--
 	  --SELECT @RangeStart AS [RangeStart], @LinkedServer AS [LinkedServer], @OpenQuery AS [OpenQuery], @SQL AS [SQL]
