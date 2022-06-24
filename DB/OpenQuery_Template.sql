@@ -41,22 +41,7 @@ SET @SQL_WHERE = 'WHERE C.PCN = 83677
   AND PT.Description LIKE ''''Adjust%'''' '
 
 SET @SQL_ORDER_BY = N' '
-SET @SQL = N' SELECT
-   C.PCN 
-  , CA.Debit_Account_No 
-  , CA.Credit_Account_No
-FROM Common_v_Cost_Account_e AS C 
-LEFT JOIN Common_v_Cost_Activity_e AS CA 
-  ON CA.PCN = C.PCN 
-    AND C.Posting_Type_Key = CA.Posting_Type_Key
-LEFT JOIN Common_v_Posting_Type AS PT 
-  ON PT.Posting_Type_Key = CA.Posting_Type_Key 	
-WHERE C.PCN = 83677 
-  AND PT.Active = 1 
-  --AND Cst.Active = 1 
-  --AND PT.Description LIKE ''''Adjust%''''
-  ORDER BY CA.Debit_Account_No 
-  , CA.Credit_Account_No '	
+SET @SQL = N' SELECT COUNT(*) FROM (SELECT DISTINCT Plexus_User_No FROM Plexus_Control_V_Plexus_User_E AS PU WHERE Active = -1) AS X '	
 
 EXEC(@OpenQuery + @SQL + @End_Open_Query)
 --EXEC(@OPENQUERY + @SQL_SELECT + @SQL_FROM + @SQL_WHERE + @End_Open_Query)

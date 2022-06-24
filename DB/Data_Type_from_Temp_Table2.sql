@@ -3,8 +3,9 @@
 -- SELECT * INTO #Tmp1 FROM (SELECT TOP 100 * FROM OPENQUERY(PLEX_VIEWS, 'SELECT TOP 100 Part_Key, Part_No, Revision FROM Part_v_Part_e AS p') AS Q) AS A
 -- Another method of detecting data types for columns in a table using a temporary table.
 -- Reference: https://stackoverflow.com/questions/7486941/finding-the-data-types-of-a-sql-temporary-table/7486974#7486974
-use tempdb
+use Plex_Accelerated
 declare @tmp table(val nvarchar(max))
+declare @tablename VARCHAR(256) = 'Stored_Procedure_Informaion_f'
 insert into @tmp 
 select case data_type   
     when 'binary' then COLUMN_NAME + ' ' + DATA_TYPE + '(' + cast(CHARACTER_MAXIMUM_LENGTH AS nvarchar(max)) + ')'
@@ -24,7 +25,10 @@ select case data_type
 
     end +  case when IS_NULLABLE <> 'YES' then ' NOT NULL' else '' end 'dataType'
      from INFORMATION_SCHEMA.COLUMNS
-where TABLE_NAME like @tableName + '%'
+where TABLE_NAME like 'Stored_Procedure_Information_f' + '%'
+
+--select * from @tmp AS tmp
+--GO
 
 declare @result nvarchar(max)
 set @result = ''
@@ -32,8 +36,10 @@ select @result = @result + [val] + N','
 from @tmp
 where val is not null
 
-set @result = substring(@result, 1, (LEN(@result)-1))
+select * from @tmp AS tmp
+
+--set @result = substring(@result, 1, (LEN(@result)-1))
 
 -- The following will replce '-1' with 'max' in order to properly handle nvarchar(max) columns
-set @result = REPLACE(@result, '-1', 'max')
-select @result
+--set @result = REPLACE(@result, '-1', 'max')
+--select @result
