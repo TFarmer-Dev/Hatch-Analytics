@@ -12,7 +12,7 @@ IF OBJECT_ID(N'tempdb..#TEMP_SOURCE') IS NOT NULL
 -- Insert the linked server table into a temp table
 SELECT *
 INTO #TEMP_SOURCE
-FROM OPENQUERY([PLEX_VIEWS], N'SELECT * FROM Accelerated_Part_v_e')
+FROM OPENQUERY([PLEX_VIEWS], N'SELECT * FROM Personnel_v_Employee_e')
   
 -- If the temp table has rows drop the destination table and recreate the temp table
 --IF((SELECT count(*) FROM #TEMP_SOURCE)>0)
@@ -22,6 +22,6 @@ BEGIN
         
        -- Recreate the destination table schema and data
        SELECT *
-       INTO [Plex_Accelerated].[dbo].[Part_v_e_f]
+       INTO [Plex_Personnel].[dbo].[Employee_v_e_f]
        FROM #TEMP_SOURCE
 END
